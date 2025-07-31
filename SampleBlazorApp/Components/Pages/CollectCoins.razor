@@ -1,0 +1,56 @@
+@page "/collectcoins"
+@rendermode InteractiveServer
+
+<PageTitle>Collect Coins</PageTitle>
+
+<h1>Collect Coins</h1>
+<hr />
+<p>
+    How many can you collect?
+</p>
+
+<div>You now have @coins coins.</div>
+<button class="btn btn-primary" @onclick="CollectCoins_Button">COLLECT</button>
+
+<div>
+    @greeting
+</div>
+
+@code {
+    private int coins = 0;
+    private string greeting = string.Empty;
+
+    private void CollectCoins_Button()
+    {
+        ++coins;
+
+        if (coins <= 10)
+        {
+            greeting = "Good!";
+        }
+        else if (coins <= 20)
+        {
+            greeting = "Keep going!";
+        }
+        else if (coins <= 100)
+        {
+            greeting = "Hurrah!";
+        }
+        else if (coins <= 200)
+        {
+            greeting = "Super!";
+        }
+        else if (coins <= 300)
+        {
+            greeting = "Wow!";
+        }
+        else if (coins <= 400)
+        {
+            greeting = "Splendid!";
+        }
+        else if (coins <= 500)
+        {
+            greeting = "Divine!";
+        }
+    }
+}

@@ -1,0 +1,60 @@
+@page "/todo"
+@rendermode InteractiveServer
+
+<PageTitle>Todo</PageTitle>
+
+<h1>Todo (@todos.Count(todo => !todo.IsDone)) (@todoCount)</h1>
+<hr />
+
+<div>
+    <div>
+        @if (todos.Count == 0)
+        {
+            <p>Currently you don't have any Todo items.</p>
+        }
+        else
+        {
+            <ul style="list-style-type: none;">
+                @foreach (var todo in todos)
+                {
+                    <li><input type="checkbox" checked=@todo.IsDone @onclick="(e) => TodoCheck(todo)" /><input @bind="todo.Title" /></li>
+                }
+            </ul>
+        }
+    </div>
+
+    <div>
+        <input @bind="todoItemTitle" />
+        <button @onclick="AddTodoItem">Add</button>
+    </div>
+
+</div>
+
+@code {
+    private List<TodoItem> todos = new();
+    private string todoItemTitle = "";
+    private int todoCount = 0;
+    private bool isChecked = false;
+
+    private void AddTodoItem(){
+
+        if(string.IsNullOrEmpty(todoItemTitle)){
+            return;
+        }
+
+        var todoItem = new TodoItem{
+            Title = todoItemTitle
+        };
+        todos.Add(todoItem);
+        TodoCheck();
+        todoItemTitle = "";
+    }
+
+    private void TodoCheck(TodoItem todoItem = null){
+        if(todoItem != null) todoItem.IsDone = !todoItem.IsDone;
+        todoCount = todos.Count(t => !t.IsDone);
+        var array = Array.CreateInstance(typeof(int), 3);
+        Array.Sort(array);
+        //return todoCount;
+    }
+}

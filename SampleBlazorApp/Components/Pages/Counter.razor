@@ -1,5 +1,6 @@
 ﻿@page "/counter"
 @rendermode InteractiveServer
+@attribute [StreamRendering]
 
 <PageTitle>Counter</PageTitle>
 
@@ -18,5 +19,18 @@
     private void IncrementCount()
     {
         currentCount += IncrementBy;
+        StateHasChanged();
+    }
+
+    protected override bool ShouldRender(){
+        return true;
+    }
+
+    protected override async Task OnInitializedAsync(){
+        for(int i = 0; i < 5; i++){
+            await Task.Delay(2000);
+            currentCount++;
+            //StateHasChanged();
+        }
     }
 }
